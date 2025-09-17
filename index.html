@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spin & Win iPhone 17!</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  overflow-x: hidden;
+}
+.container {
+  padding: 20px;
+}
+h1 {
+  color: #e74c3c;
+}
+.wheel-container {
+  position: relative;
+  margin: 30px auto;
+  width: 350px;
+  height: 350px;
+}
+.wheel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 10px solid #444;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  position: relative;
+}
+.segment {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0% 0%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 10px;
+  padding-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #fff;
+}
+.pointer {
+  width: 0;
+  height: 0;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  border-bottom: 40px solid red;
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  animation: bounce 1s infinite alternate;
+}
+@keyframes bounce {
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-10px); }
+}
+button {
+  margin-top: 20px;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+#result {
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+.testimonials {
+  margin-top: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+.testimonial {
+  background: #fff;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+.testimonial strong {
+  color: #e74c3c;
+}
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🎡 Spin & Win Your Prize!</h1>
+  <p>Sign up & claim your bonus now!</p>
+
+  <div class="wheel-container">
+    <div class="pointer"></div>
+    <div class="wheel" id="wheel"></div>
+  </div>
+
+  <button id="spinBtn">Spin the Wheel!</button>
+
+  <div id="result"></div>
+
+  <div class="testimonials">
+    <div class="testimonial"><strong>John D.</strong> - "Wow! I won an iPhone 17 instantly. 📱💵"</div>
+    <div class="testimonial"><strong>Lisa M.</strong> - "Super easy and fun. Got my $50 bonus in minutes! 💵"</div>
+    <div class="testimonial"><strong>Mike P.</strong> - "Best spin-to-win game ever. Totally worth it! 📱"</div>
+    <div class="testimonial"><strong>Anna K.</strong> - "I can’t believe I got iPhone 17! So exciting. 📱"</div>
+    <div class="testimonial"><strong>David R.</strong> - "Fast and easy signup. Got $100 bonus 💵, amazing!"</div>
+    <div class="testimonial"><strong>Sophia L.</strong> - "This is addictive! Love the prizes and fun wheel! 📱💵"</div>
+  </div>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+const wheel = document.getElementById("wheel");
+const spinBtn = document.getElementById("spinBtn");
+const result = document.getElementById("result");
+const prizes = ["📱 iPhone 17","💵 $50","📱 iPhone 17","💵 $20","📱 iPhone 17","💵 $100"];
+const colors = ['#e74c3c','#27ae60','#f1c40f','#3498db','#9b59b6','#fd79a8'];
+
+function createSegments(){
+  for(let i=0;i<prizes.length;i++){
+    const seg = document.createElement('div');
+    seg.className = 'segment';
+    seg.style.transform = `rotate(${i*60}deg)`;
+    seg.style.background = colors[i];
+    seg.style.width = '50%';
+    seg.style.height = '50%';
+    seg.style.clipPath = 'polygon(0 0, 100% 0, 0 100%)';
+    seg.innerHTML = prizes[i];
+    wheel.appendChild(seg);
+  }
+}
+createSegments();
+
+spinBtn.addEventListener("click", ()=>{
+  spinBtn.disabled = true;
+  const deg = 360*5 + Math.floor(Math.random()*360);
+  wheel.style.transform = `rotate(${deg}deg)`;
+  setTimeout(()=>{
+    const prizeIndex = Math.floor((deg % 360)/60);
+    const prize = prizes[prizeIndex];
+    result.innerHTML = `🎉 Congratulations! You won ${prize}! 🎉<br><br>
+    <a href="https://www.revenuecpmgate.com/e2v35qrj?key=3ee8b3bbc638e3fb9a7ff891d85a7b6b" style="padding:15px 30px; background:#e74c3c; color:#fff; border-radius:8px; text-decoration:none; font-size:20px;">Sign Up & Claim Prize</a>`;
+    launchConfetti();
+  },5200);
+});
+
+// Confetti
+const canvas = document.getElementById('confetti');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let confetti = [];
+for(let i=0;i<150;i++){
+  confetti.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height- canvas.height,
+    r: Math.random()*6+4,
+    d: Math.random()*150+150,
+    color: colors[Math.floor(Math.random()*colors.length)],
+    tilt: Math.random()*10-10,
+    tiltAngleIncremental: Math.random()*0.07+0.05,
+    tiltAngle:0
+  });
+}
+
+function drawConfetti(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  confetti.forEach((c)=>{
+    ctx.beginPath();
+    ctx.lineWidth = c.r/2;
+    ctx.strokeStyle = c.color;
+    ctx.moveTo(c.x+c.tilt+ c.r/4, c.y);
+    ctx.lineTo(c.x+c.tilt, c.y+c.tilt+ c.r/4);
+    ctx.stroke();
+  });
+  updateConfetti();
+}
+function updateConfetti(){
+  confetti.forEach((c,i)=>{
+    c.tiltAngle += c.tiltAngleIncremental;
+    c.y += (Math.cos(c.d)+3+c.r/2)/2;
+    c.tilt = Math.sin(c.tiltAngle)*15;
+    if(c.y>canvas.height){c.y = -10; c.x = Math.random()*canvas.width;}
+  });
+  requestAnimationFrame(drawConfetti);
+}
+function launchConfetti(){ drawConfetti(); }
+</script>
+
+</body>
+</html>
