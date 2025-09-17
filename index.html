@@ -1,189 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Spin & Win iPhone 17 — Claim Your Prize!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spin & Win iPhone 17</title>
 <style>
-  :root{
-    --accent:#e74c3c;
-    --accent-dark:#c0392b;
-    --green:#27ae60;
-    --bg:#f4f6f8;
-    --card:#ffffff;
-    --muted:#6b7280;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif;
-    background:var(--bg);
-    color:#111827;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    text-rendering:optimizeLegibility;
-  }
+:root{
+  --accent:#e74c3c;
+  --accent-dark:#c0392b;
+  --green:#27ae60;
+  --bg:#f4f6f8;
+  --card:#fff;
+  --muted:#6b7280;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:#111827;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+.wrap{max-width:920px;margin:18px auto;padding:16px;}
+.top{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.brand{display:flex;gap:10px;align-items:center;}
+.logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px;box-shadow:0 6px 18px rgba(199,46,46,0.18);}
+h1{margin:0;font-size:20px}
+.sub{color:var(--muted);font-size:13px;margin-top:4px}
+.card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(16,24,40,0.06);}
+.layout{display:grid;grid-template-columns:1fr 420px;gap:18px;margin-top:14px;}
+@media (max-width:880px){.layout{grid-template-columns:1fr}}
+.wheel-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.wheel-container{position:relative;width:320px;height:320px;max-width:85vw;max-height:85vw;margin:0 auto;}
+.wheel{width:100%;height:100%;border-radius:50%;border:10px solid rgba(0,0,0,0.06);box-shadow:0 10px 30px rgba(2,6,23,0.08);position:relative;overflow:visible;transition:transform 5s cubic-bezier(.22,.9,.37,1);transform-origin:center center;background:conic-gradient(#ff7675 0deg 60deg,#55efc4 60deg 120deg,#ffeaa7 120deg 180deg,#74b9ff 180deg 240deg,#fd79a8 240deg 300deg,#fab1a0 300deg 360deg);}
+.pointer{position:absolute;left:50%;transform:translateX(-50%);top:-30px;z-index:30;width:0;height:0;border-left:20px solid transparent;border-right:20px solid transparent;border-bottom:36px solid var(--accent);filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));animation: bounce 1.2s infinite alternate;}
+@keyframes bounce{from{transform:translateX(-50%) translateY(0)} to{transform:translateX(-50%) translateY(-8px)}}
+.spin-btn{display:inline-block;margin-top:10px;background:linear-gradient(180deg,var(--green),#1f8a4d);color:#fff;padding:12px 18px;border-radius:10px;border:0;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 8px 24px rgba(39,174,96,0.18);}
+.spin-btn[disabled]{opacity:.6;cursor:not-allowed;box-shadow:none}
+.result-area{margin-top:14px;text-align:center;font-weight:700}
+.claim-area{padding:12px;border-radius:10px;background:linear-gradient(90deg,#fff,#fcfcfc);border:1px solid rgba(0,0,0,0.04);display:flex;flex-direction:column;gap:8px;align-items:center;}
+.claim-btn{margin-top:8px;background:var(--accent);color:#fff;border:0;padding:12px 14px;border-radius:10px;font-weight:800;font-size:16px;text-decoration:none;display:inline-block;box-shadow:0 8px 20px rgba(231,76,60,0.16);}
+.small-muted{font-size:13px;color:var(--muted)}
+.test-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.test-item{display:flex;gap:10px;align-items:center;background:#fff;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.03)}
+.avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+.stars{color:#f6b93b;font-weight:700;font-size:13px}
+.name{font-weight:700}
+.msg{color:var(--muted);font-size:13px}
+canvas#confetti{position:fixed;left:0;top:0;pointer-events:none;width:100%;height:100%;z-index:9999}
 
-  .wrap{max-width:920px;margin:18px auto;padding:16px}
-  .top {
-    display:flex;
-    gap:12px;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:10px;
-  }
-  .brand {
-    display:flex;
-    gap:10px;
-    align-items:center;
-  }
-  .logo {
-    width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));
-    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px;
-    box-shadow:0 6px 18px rgba(199,46,46,0.18);
-  }
-  h1{margin:0;font-size:20px}
-  .sub{color:var(--muted);font-size:13px;margin-top:4px}
-
-  .card {
-    background:var(--card);
-    border-radius:14px;
-    padding:18px;
-    box-shadow:0 8px 30px rgba(16,24,40,0.06);
-  }
-
-  .layout {
-    display:grid;
-    grid-template-columns: 1fr 420px;
-    gap:18px;
-    margin-top:14px;
-  }
-
-  /* mobile */
-  @media (max-width:880px){
-    .layout{grid-template-columns:1fr}
-  }
-
-  /* wheel area */
-  .wheel-wrap{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:12px;
-  }
-
-  .wheel-container {
-    position:relative;
-    width:320px;height:320px;
-    max-width:85vw;
-    max-height:85vw;
-    margin:0 auto;
-  }
-
-  .wheel {
-    width:100%;height:100%;
-    border-radius:50%;
-    border:10px solid rgba(0,0,0,0.06);
-    box-shadow:0 10px 30px rgba(2,6,23,0.08);
-    position:relative;
-    overflow:visible;
-    transition:transform 5s cubic-bezier(.22,.9,.37,1);
-    transform-origin:center center;
-    background:conic-gradient(#ff7675 0deg 60deg,#55efc4 60deg 120deg,#ffeaa7 120deg 180deg,#74b9ff 180deg 240deg,#fd79a8 240deg 300deg,#fab1a0 300deg 360deg);
-  }
-
-  .wheel .segment {
-    position:absolute;
-    width:50%;
-    height:50%;
-    top:50%;
-    left:50%;
-    transform-origin:0 0;
-    display:flex;
-    align-items:flex-start;
-    justify-content:flex-start;
-    padding:10px;
-    font-weight:700;
-    font-size:16px;
-    color:#111827;
-    text-shadow:0 1px 0 rgba(255,255,255,0.15);
-  }
-
-  .pointer {
-    position:absolute;
-    left:50%;
-    transform:translateX(-50%);
-    top:-30px;
-    z-index:30;
-    width:0;height:0;
-    border-left:20px solid transparent;
-    border-right:20px solid transparent;
-    border-bottom:36px solid var(--accent);
-    filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));
-    animation: bounce 1.2s infinite alternate;
-  }
-  @keyframes bounce{from{transform:translateX(-50%) translateY(0)} to{transform:translateX(-50%) translateY(-8px)}}
-
-  .spin-btn{
-    display:inline-block;
-    margin-top:10px;
-    background:linear-gradient(180deg,var(--green),#1f8a4d);
-    color:#fff;padding:12px 18px;border-radius:10px;border:0;font-weight:700;font-size:16px;
-    cursor:pointer;box-shadow:0 8px 24px rgba(39,174,96,0.18);
-  }
-  .spin-btn[disabled]{opacity:.6;cursor:not-allowed;box-shadow:none}
-
-  .result-area{margin-top:14px; text-align:center; font-weight:700}
-
-  /* right column */
-  .right {
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
-
-  .meta {
-    display:flex;
-    gap:10px;
-    align-items:center;
-    justify-content:space-between;
-  }
-
-  .timer {
-    background:linear-gradient(180deg,#fff,#fbfbfb);
-    padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);
-    display:flex;gap:12px;align-items:center;justify-content:space-between;
-  }
-  .timer .big{font-weight:800;font-size:18px;color:var(--accent)}
-  .left-count{font-size:13px;color:var(--muted)}
-
-  .claim-area {
-    padding:12px;border-radius:10px;background:linear-gradient(90deg,#fff,#fcfcfc);
-    border:1px solid rgba(0,0,0,0.04);
-    display:flex;flex-direction:column;gap:8px;align-items:center;
-  }
-
-  .claim-btn {
-    margin-top:8px;
-    background:var(--accent);
-    color:#fff;border:0;padding:12px 14px;border-radius:10px;font-weight:800;font-size:16px;
-    text-decoration:none;display:inline-block;box-shadow:0 8px 20px rgba(231,76,60,0.16);
-  }
-
-  .claim-btn:active{transform:translateY(1px)}
-
-  .small-muted{font-size:13px;color:var(--muted)}
-
-  /* testimonials */
-  .test-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-  .test-item{display:flex;gap:10px;align-items:center;background:#fff;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.03)}
-  .avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
-  .stars{color:#f6b93b;font-weight:700;font-size:13px}
-  .name{font-weight:700}
-  .msg{color:var(--muted);font-size:13px}
-
-  /* confetti canvas */
-  canvas#confetti{position:fixed;left:0;top:0;pointer-events:none;width:100%;height:100%;z-index:9999}
+/* Popup Modal */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;z-index:999;}
+.modal-content{background:#fff;padding:20px;border-radius:12px;text-align:center;max-width:320px;position:relative;}
+.close-btn{position:absolute;top:8px;right:10px;cursor:pointer;font-weight:bold;font-size:18px;}
 </style>
 </head>
 <body>
@@ -197,256 +60,121 @@
         <div class="sub">Only for USA Android visitors — spin & sign up to claim your prize</div>
       </div>
     </div>
-    <div style="text-align:right">
-      <div style="font-size:13px;color:var(--muted)">Realistic giveaway experience</div>
-      <div style="font-weight:800;color:var(--accent)">Trusted by thousands</div>
-    </div>
   </div>
 
   <div class="layout">
-
-    <!-- LEFT: wheel -->
     <div class="card wheel-wrap">
-      <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-direction:column">
-        <div style="font-weight:800">Try your luck — win an iPhone 17 or cash!</div>
-        <div class="small-muted">Tap Spin — then click <strong>Claim</strong> to sign up</div>
+      <div style="text-align:center;font-weight:800;margin-bottom:8px">Try your luck — win iPhone 17 or cash!</div>
+      <div class="wheel-container">
+        <div class="pointer"></div>
+        <div class="wheel" id="wheel"></div>
       </div>
-
-      <div class="wheel-container" aria-hidden="false">
-        <div class="pointer" id="pointer" title="pointer"></div>
-        <div class="wheel" id="wheel" role="img" aria-label="Prize wheel"></div>
-      </div>
-
       <button class="spin-btn" id="spinBtn">🎡 Spin the Wheel</button>
-
       <div class="result-area" id="resultText"></div>
     </div>
 
-    <!-- RIGHT: claim & meta -->
     <div class="right">
-
-      <div class="card meta">
-        <div class="timer">
-          <div>
-            <div style="font-size:12px;color:var(--muted)">Time left for today's draw</div>
-            <div class="big" id="countdown">00:24:59</div>
-          </div>
-          <div style="text-align:right">
-            <div class="left-count">Prizes left today</div>
-            <div style="font-size:20px;font-weight:900;color:#111827" id="prizeLeft">12</div>
-          </div>
-        </div>
-      </div>
-
       <div class="card claim-area">
-        <div style="font-size:15px;font-weight:800">You've won: <span id="winText">—</span></div>
-        <div class="small-muted">Click the claim button to go to the signup page and complete your claim</div>
-        <a id="claimBtn" class="claim-btn" href="https://www.revenuecpmgate.com/e2v35qrj?key=3ee8b3bbc638e3fb9a7ff891d85a7b6b" target="_blank" rel="noopener noreferrer">👉 Sign Up & Claim Prize</a>
-        <div class="small-muted" style="margin-top:6px">Opens in a new tab — complete signup there.</div>
+        <div style="font-size:15px;font-weight:800">Prize: <span id="winText">—</span></div>
+        <a class="claim-btn" id="claimBtn" href="https://www.revenuecpmgate.com/e2v35qrj?key=3ee8b3bbc638e3fb9a7ff891d85a7b6b" target="_blank">Sign Up & Claim Bonus</a>
+        <div class="small-muted">Opens in a new tab — complete signup there.</div>
       </div>
 
       <div class="card">
         <div style="font-weight:800;margin-bottom:8px">Recent Winners</div>
         <div class="test-list">
-          <div class="test-item">
-            <div class="avatar" style="background:#6c5ce7">JD</div>
-            <div style="flex:1">
-              <div class="name">John D. <span class="stars">★★★★★</span></div>
-              <div class="msg">Won iPhone 17 — signed up & got confirmation. 📱</div>
-            </div>
-          </div>
-
-          <div class="test-item">
-            <div class="avatar" style="background:#ff7675">LM</div>
-            <div style="flex:1">
-              <div class="name">Lisa M. <span class="stars">★★★★★</span></div>
-              <div class="msg">Got $50 bonus — fast and legit. 💵</div>
-            </div>
-          </div>
-
-          <div class="test-item">
-            <div class="avatar" style="background:#55efc4;color:#064e3b">MP</div>
-            <div style="flex:1">
-              <div class="name">Mike P. <span class="stars">★★★★★</span></div>
-              <div class="msg">Easy signup, received voucher today. ✅</div>
-            </div>
-          </div>
-
-          <div class="test-item">
-            <div class="avatar" style="background:#fd79a8">AK</div>
-            <div style="flex:1">
-              <div class="name">Anna K. <span class="stars">★★★★★</span></div>
-              <div class="msg">I won the phone! Super excited. 📱🎉</div>
-            </div>
-          </div>
-
+          <div class="test-item"><div class="avatar" style="background:#6c5ce7">JD</div><div style="flex:1"><div class="name">John D. <span class="stars">★★★★★</span></div><div class="msg">Won iPhone 17 — signed up & got confirmation. 📱</div></div></div>
+          <div class="test-item"><div class="avatar" style="background:#ff7675">LM</div><div style="flex:1"><div class="name">Lisa M. <span class="stars">★★★★★</span></div><div class="msg">Got $50 bonus — fast and legit. 💵</div></div></div>
+          <div class="test-item"><div class="avatar" style="background:#55efc4;color:#064e3b">MP</div><div style="flex:1"><div class="name">Mike P. <span class="stars">★★★★★</span></div><div class="msg">Easy signup, received voucher today. ✅</div></div></div>
+          <div class="test-item"><div class="avatar" style="background:#fd79a8">AK</div><div style="flex:1"><div class="name">Anna K. <span class="stars">★★★★★</span></div><div class="msg">I won the phone! Super excited. 📱🎉</div></div></div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
 
+<!-- Confetti canvas -->
 <canvas id="confetti"></canvas>
 
+<!-- Popup Modal -->
+<div class="modal" id="popup">
+  <div class="modal-content">
+    <span class="close-btn" id="closePopup">&times;</span>
+    <h2>🎉 Congratulations!</h2>
+    <p>You won <strong>iPhone 17</strong></p>
+    <a class="claim-btn" href="https://www.revenuecpmgate.com/e2v35qrj?key=3ee8b3bbc638e3fb9a7ff891d85a7b6b" target="_blank">Sign Up & Claim Bonus</a>
+  </div>
+</div>
+
 <script>
-/* ========== PRIZES ========== */
-const prizes = [
-  "📱 iPhone 17",
-  "💵 $50",
-  "📱 iPhone 17",
-  "💵 $20",
-  "📱 iPhone 17",
-  "💵 $100"
-];
-const colors = ['#e74c3c','#27ae60','#f1c40f','#3498db','#9b59b6','#fd79a8'];
-
-/* Build wheel segments visually */
+// Wheel prizes
+const prizes = ["📱 iPhone 17","💵 $50","📱 iPhone 17","💵 $20","📱 iPhone 17","💵 $100"];
 const wheel = document.getElementById('wheel');
-function buildWheel(){
-  for(let i=0;i<prizes.length;i++){
-    const seg = document.createElement('div');
-    seg.className = 'segment';
-    seg.style.transform = `rotate(${i*60}deg)`;
-    seg.style.background = colors[i];
-    seg.style.width = '50%';
-    seg.style.height = '50%';
-    seg.style.clipPath = 'polygon(0 0, 100% 0, 0 100%)';
-    seg.style.display = 'flex';
-    seg.style.alignItems = 'flex-start';
-    seg.style.justifyContent = 'flex-start';
-    seg.style.padding = '14px';
-    seg.style.fontSize = '16px';
-    seg.style.color = '#fff';
-    seg.innerHTML = `<span style="display:block">${prizes[i]}</span>`;
-    wheel.appendChild(seg);
-  }
-}
-buildWheel();
-
-/* Spin logic */
 const spinBtn = document.getElementById('spinBtn');
 const resultText = document.getElementById('resultText');
 const winText = document.getElementById('winText');
-const claimBtn = document.getElementById('claimBtn');
+const popup = document.getElementById('popup');
+const closePopup = document.getElementById('closePopup');
 let spinning=false;
-let prizeLeftEl = document.getElementById('prizeLeft');
-let prizeLeft = parseInt(prizeLeftEl.textContent,10) || 12;
 
-function randomInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+// Build segments
+for(let i=0;i<prizes.length;i++){
+  const seg=document.createElement('div');
+  seg.textContent=prizes[i];
+  seg.style.position='absolute';
+}
 
 spinBtn.addEventListener('click', ()=>{
   if(spinning) return;
   spinning=true;
-  resultText.textContent = '';
-  winText.textContent = '—';
-  // spin degrees: base spins + offset
-  const baseSpins = 360 * randomInt(4,6);
-  const offset = randomInt(0,359);
-  const deg = baseSpins + offset;
-  wheel.style.transform = `rotate(${deg}deg)`;
-  spinBtn.disabled = true;
-  // realistic delay
+  resultText.textContent='';
+  winText.textContent='—';
+  const deg=360*5 + Math.floor(Math.random()*360);
+  wheel.style.transform=`rotate(${deg}deg)`;
+  spinBtn.disabled=true;
+
   setTimeout(()=>{
-    const landing = (deg % 360);
-    // determine index: each segment 60deg, but wheel rotated clockwise so invert index
-    const idx = Math.floor(((360 - landing) % 360) / 60);
-    const prize = prizes[idx];
-    resultText.innerHTML = `🎉 You landed on <strong>${prize}</strong>!`;
-    winText.textContent = prize;
-    // decrease prize left (simulate urgency) but don't go below 1
-    if(prizeLeft > 1){
-      prizeLeft = prizeLeft - 1;
-      prizeLeftEl.textContent = prizeLeft;
-    }
-    // celebrate
-    launchConfetti();
+    const prize='iPhone 17'; // fixed for demo
+    resultText.textContent=`🎉 You landed on ${prize}!`;
+    winText.textContent=prize;
+    popup.style.display='flex';
+    startConfetti();
     spinning=false;
-    spinBtn.disabled = false;
-    // show claim button but keep it manual (no auto-redirect)
-    // claim button already points to your smartlink
-  },5300);
+    spinBtn.disabled=false;
+  },5200);
 });
 
-/* ======= Countdown timer (today's draw) ======= */
-const countdownEl = document.getElementById('countdown');
-// set end-of-day countdown (local timezone)
-function updateCountdown(){
-  const now = new Date();
-  const end = new Date();
-  end.setHours(23,59,59,999);
-  let diff = Math.max(0, end - now);
-  const h = Math.floor(diff / (1000*60*60));
-  diff -= h*(1000*60*60);
-  const m = Math.floor(diff / (1000*60));
-  diff -= m*(1000*60);
-  const s = Math.floor(diff/1000);
-  countdownEl.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-}
-updateCountdown();
-setInterval(updateCountdown,1000);
+// Popup close
+closePopup.addEventListener('click', ()=>{
+  popup.style.display='none';
+  stopConfetti();
+});
 
-/* ===== CONFETTI ===== */
-const canvas = document.getElementById('confetti');
-const ctx = canvas.getContext('2d');
-function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-let confetti = [];
-const maxConfetti = 160;
-
-function initConfetti(){
-  confetti = [];
-  for(let i=0;i<maxConfetti;i++){
-    confetti.push({
-      x: Math.random()*canvas.width,
-      y: Math.random()*canvas.height - canvas.height,
-      r: Math.random()*6+4,
-      d: Math.random()*150+150,
-      color: colors[Math.floor(Math.random()*colors.length)],
-      tilt: Math.random()*10 - 10,
-      tiltAngle: 0,
-      tiltAngleIncremental: Math.random()*0.07 + 0.05
-    });
+// Simple confetti
+let confettiInterval;
+function startConfetti(){
+  const canvas=document.getElementById('confetti');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  const confs=[];
+  for(let i=0;i<150;i++){
+    confs.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*6+2,dx:(Math.random()-0.5)*4,dy:Math.random()*4+1,color:`hsl(${Math.random()*360},100%,50%)`});
   }
+  confettiInterval=setInterval(()=>{
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    confs.forEach(c=>{
+      c.x+=c.dx;
+      c.y+=c.dy;
+      if(c.y>canvas.height)c.y=0;
+      ctx.beginPath();
+      ctx.arc(c.x,c.y,c.r,0,2*Math.PI);
+      ctx.fillStyle=c.color;
+      ctx.fill();
+    });
+  },16);
 }
-initConfetti();
-
-function drawConfetti(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  confetti.forEach(c=>{
-    ctx.beginPath();
-    ctx.lineWidth = c.r/2;
-    ctx.strokeStyle = c.color;
-    ctx.moveTo(c.x + c.tilt + c.r/4, c.y);
-    ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r/4);
-    ctx.stroke();
-    c.tiltAngle += c.tiltAngleIncremental;
-    c.y += (Math.cos(c.d) + 3 + c.r/2)/2;
-    c.tilt = Math.sin(c.tiltAngle)*15;
-    if(c.y > canvas.height){ c.y = -10; c.x = Math.random()*canvas.width; }
-  });
-  requestAnimationFrame(drawConfetti);
-}
-
-let confettiRunning=false;
-function launchConfetti(){
-  if(confettiRunning) return;
-  confettiRunning=true;
-  drawConfetti();
-  setTimeout(()=>{ confettiRunning=false; ctx.clearRect(0,0,canvas.width,canvas.height); },4200);
-}
-
-/* small safety: open claim link in new tab; nothing else required */
-claimBtn.addEventListener('click', ()=>{
-  // you can optionally track clicks via logging here
-});
-
-/* Accessibility: keyboard spin */
-spinBtn.addEventListener('keydown', (e)=>{
-  if(e.key === 'Enter' || e.key === ' ') spinBtn.click();
-});
-
+function stopConfetti(){clearInterval(confettiInterval);}
 </script>
 
 </body>
